@@ -34,104 +34,104 @@
 </template>
 
 <script>
-import { imgTo64, checkVisiter, webUrl } from "../../../static/js/public.js";
-import imgDefault from "../../../static/img/avatar.png";
+import { imgTo64, checkVisiter, webUrl } from '../../../static/js/public.js'
+import imgDefault from '../../../static/img/avatar.png'
 
 export default {
   mixins: [checkVisiter],
-  data() {
+  data () {
     return {
       nickName: null,
       avatar: null,
       name: null,
       token: null,
-      imgDefault:imgDefault
-    };
+      imgDefault: imgDefault
+    }
   },
-  created() {
-    this.nickName = localStorage.getItem("nickName");
-    this.avatar = localStorage.getItem("avatar");
-    this.name = localStorage.getItem("user_name");
-    this.token = localStorage.getItem("token");
+  created () {
+    this.nickName = localStorage.getItem('nickName')
+    this.avatar = localStorage.getItem('avatar')
+    this.name = localStorage.getItem('user_name')
+    this.token = localStorage.getItem('token')
   },
   methods: {
-    upLoad: function(e) {
-      //上传头像
-      let that = this;
-      let files = e.target.files || e.dataTransfer.files;
+    upLoad: function (e) {
+      // 上传头像
+      let that = this
+      let files = e.target.files || e.dataTransfer.files
 
-      if (!files.length) return;
+      if (!files.length) return
       if (
-        files[0].type.indexOf("png") > -1 ||
-        files[0].type.indexOf("jpg") > -1 ||
-        files[0].type.indexOf("jpeg") > -1
+        files[0].type.indexOf('png') > -1 ||
+        files[0].type.indexOf('jpg') > -1 ||
+        files[0].type.indexOf('jpeg') > -1
       ) {
         if (files[0].size < 2000000) {
-          if (typeof FileReader === "undefined") {
-            alert("您的浏览器不支持图片上传，请升级您的浏览器");
+          if (typeof FileReader === 'undefined') {
+            alert('您的浏览器不支持图片上传，请升级您的浏览器')
           }
-          let reader = new FileReader();
-          reader.readAsDataURL(files[0]);
-          reader.onload = function(e) {
-            let image = new Image();
-            image.src = e.target.result; //原始base64
-            image.setAttribute("crossOrigin", "anonymous"); //允许图片跨域请求、必须后台也允许
+          let reader = new FileReader()
+          reader.readAsDataURL(files[0])
+          reader.onload = function (e) {
+            let image = new Image()
+            image.src = e.target.result // 原始base64
+            image.setAttribute('crossOrigin', 'anonymous') // 允许图片跨域请求、必须后台也允许
             image.onload = () => {
-              let base64 = imgTo64(image); //使用cavas压缩
-              that.avatar = base64;
-            };
-          };
+              let base64 = imgTo64(image) // 使用cavas压缩
+              that.avatar = base64
+            }
+          }
         } else {
-          alert("请上传2M以内的图片");
+          alert('请上传2M以内的图片')
         }
       } else {
-        alert("请上传JPG/PNG格式的图片");
+        alert('请上传JPG/PNG格式的图片')
       }
     },
-    save: function() {
-      //保存
-      let that = this;
+    save: function () {
+      // 保存
+      let that = this
       that.$axios
-        .post(webUrl + "admin/updateUser", {
+        .post(webUrl + 'admin/updateUser', {
           name: that.name,
           token: that.token,
           nickName: that.nickName,
           avatar: that.avatar
         })
         .then(response => {
-          alert(response.data.msg);
-          if (response.data.status == 1) {
-            localStorage.setItem("nickName", response.data.nickName);
-            localStorage.setItem("avatar", response.data.avatar);
+          alert(response.data.msg)
+          if (response.data.status === 1) {
+            localStorage.setItem('nickName', response.data.nickName)
+            localStorage.setItem('avatar', response.data.avatar)
           }
         })
         .catch(reject => {
-          console.log(reject);
-        });
+          console.log(reject)
+        })
     },
-    signOut: function() {
-      //退出
-      let that = this;
+    signOut: function () {
+      // 退出
+      let that = this
       that.$axios
-        .post(webUrl + "admin/signOut", {
+        .post(webUrl + 'admin/signOut', {
           name: that.name,
           token: that.token
         })
         .then(response => {
-          alert(response.data.msg);
-          if (response.data.status == 1) {
-            this.$store.commit("changeIsSignIn", 0);
-            this.$store.commit("changeIndex", "1");
-            localStorage.clear();
-            this.$router.replace({ name: "home" });
+          alert(response.data.msg)
+          if (response.data.status === 1) {
+            this.$store.commit('changeIsSignIn', 0)
+            this.$store.commit('changeIndex', '1')
+            localStorage.clear()
+            this.$router.replace({ name: 'home' })
           }
         })
         .catch(reject => {
-          console.log(reject);
-        });
+          console.log(reject)
+        })
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

@@ -105,64 +105,64 @@
 </template>
 
 <script>
-import { anchor } from "../../static/js/public.js";
+import { anchor } from '../../static/js/public.js'
 
 const arr = [
-  "富强",
-  "民主",
-  "文明",
-  "和谐",
-  "自由",
-  "平等",
-  "公正",
-  "法治",
-  "爱国",
-  "敬业",
-  "诚信",
-  "友善"
-];
+  '富强',
+  '民主',
+  '文明',
+  '和谐',
+  '自由',
+  '平等',
+  '公正',
+  '法治',
+  '爱国',
+  '敬业',
+  '诚信',
+  '友善'
+]
 const setStyle = (obj, json) => {
   for (var i in json) {
-    obj.style[i] = json[i];
+    obj.style[i] = json[i]
   }
-};
+}
 
-let index = 0;
+let index = 0
 
 export default {
   mixins: [anchor],
-  data() {
+  data () {
     return {
       // items:[]
-    };
+    }
   },
   components: {},
-  created() {
+  created () {
     // this.$http.get('/api/goods').then((data)=>{
     //   this.items=data.body.data;
     // })
   },
   methods: {
-    clickTips: function(e) {
+    clickTips: function (e) {
       if (index >= arr.length) {
-        index = 0;
+        index = 0
       }
-      let newA = document.createElement("a");
-      newA.className = "click_tips";
+      let newA = document.createElement('a')
+      newA.className = 'click_tips'
       let styles = {
         left: `${e.pageX}px`,
         top: `${e.pageY - 20}px`
-      };
-      newA.innerHTML = arr[index];
-      setStyle(newA, styles);
-      document.getElementById("page").appendChild(newA);
-      index++;
-      newA.addEventListener("animationend", () => {
-        document.getElementById("page").removeChild(newA);
-      });
+      }
+      newA.innerHTML = arr[index]
+      setStyle(newA, styles)
+      document.getElementById('page').appendChild(newA)
+      index++
+      newA.addEventListener('animationend', () => {
+        document.getElementById('page').removeChild(newA)
+      })
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

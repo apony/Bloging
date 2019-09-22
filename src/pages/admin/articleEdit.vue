@@ -29,102 +29,102 @@
 </template>
 
 <script>
-import {checkAdmin,webUrl} from '../../../static/js/public.js'
+import {checkAdmin, webUrl} from '../../../static/js/public.js'
 
-  export default {
-    mixins: [checkAdmin],
-    data() {
-      return {
-        title: '',
-        date: '',
-        category:[],
-        gist: '',
-        content: '',
-        categorys:['JavaScript','ES6','jQuery','css','ajax',
-        'http','https','websocket','apache','Vue','react','react-native',
-        'android','node','mongo','CentOS','webpack',
-        'NW.js','Electron','easyUI','ECharts','wx','HBuilder']
-      }
-    },
-    beforeCreate:function(){
-    },
-    mounted: function () {
-      if (this.$route.params.id) {
-        this.$axios.get(webUrl+'articleDetail/' + this.$route.params.id)
+export default {
+  mixins: [checkAdmin],
+  data () {
+    return {
+      title: '',
+      date: '',
+      category: [],
+      gist: '',
+      content: '',
+      categorys: ['JavaScript', 'ES6', 'jQuery', 'css', 'ajax',
+        'http', 'https', 'websocket', 'apache', 'Vue', 'react', 'react-native',
+        'android', 'node', 'mongo', 'CentOS', 'webpack',
+        'NW.js', 'Electron', 'easyUI', 'ECharts', 'wx', 'HBuilder']
+    }
+  },
+  beforeCreate: function () {
+  },
+  mounted: function () {
+    if (this.$route.params.id) {
+      this.$axios.get(webUrl + 'articleDetail/' + this.$route.params.id)
           .then(
             (res) => {
-              let article=res.data;
+              let article = res.data
 
-              this.title = article.title;
-              this.date = article.date;
-              this.content = article.content;
-              this.gist = article.gist;
-              this.category = article.category;
+              this.title = article.title
+              this.date = article.date
+              this.content = article.content
+              this.gist = article.gist
+              this.category = article.category
               // setTimeout(() => {
               // document.querySelector('.v-show-content').innerHTML=article.html;
               // }, 500);
             }
-          );
-      }
-    },
-    methods: {
+          )
+    }
+  },
+  methods: {
       // 获取发表时间
-      getDate: function () {
-        let mydate, y, m, d, hh, mm, ss;
-        mydate = new Date()
-        y = mydate.getFullYear()
-        m = mydate.getMonth()+1
-        d = mydate.getDate()
-        hh = mydate.getHours()
-        mm = mydate.getMinutes()
-        ss = mydate.getSeconds()
-        if (m < 10) m = '0' + m
-        if (d < 10) d = '0' + d
-        if (hh < 10) hh = '0' + hh
-        if (mm < 10) mm = '0' + mm
-        if (ss < 10) ss = '0' + ss
-        this.date = y + '-' + m + '-' + d + ' ' + hh + ':' + mm + ':' + ss
-      },
+    getDate: function () {
+      let mydate, y, m, d, hh, mm, ss
+      mydate = new Date()
+      y = mydate.getFullYear()
+      m = mydate.getMonth() + 1
+      d = mydate.getDate()
+      hh = mydate.getHours()
+      mm = mydate.getMinutes()
+      ss = mydate.getSeconds()
+      if (m < 10) m = '0' + m
+      if (d < 10) d = '0' + d
+      if (hh < 10) hh = '0' + hh
+      if (mm < 10) mm = '0' + mm
+      if (ss < 10) ss = '0' + ss
+      this.date = y + '-' + m + '-' + d + ' ' + hh + ':' + mm + ':' + ss
+    },
       // 保存文章
-      saveArticle: function () {
-        let self = this
-        if (this.title.length === 0) {
-          this.$notify({
-            title: '提醒',
-            message: '请输入标题',
-            type: 'warning'
-          })
-          return
-        }
-        if (this.content.length === 0) {
-          this.$notify({
-            title: '提醒',
-            message: '请输入内容',
-            type: 'warning'
-          })
-          return
-        }
-        if (this.gist.length === 0) {
-          this.$notify({
-            title: '提醒',
-            message: '请输入简介',
-            type: 'warning'
-          })
-          return
-        }
-        if (this.$route.params.id) {
+    saveArticle: function () {
+      let self = this
+      if (this.title.length === 0) {
+        this.$notify({
+          title: '提醒',
+          message: '请输入标题',
+          type: 'warning'
+        })
+        return
+      }
+      if (this.content.length === 0) {
+        this.$notify({
+          title: '提醒',
+          message: '请输入内容',
+          type: 'warning'
+        })
+        return
+      }
+      if (this.gist.length === 0) {
+        this.$notify({
+          title: '提醒',
+          message: '请输入简介',
+          type: 'warning'
+        })
+        return
+      }
+      if (this.$route.params.id) {
           // 更新文章
-          let obj = {
-            _id: this.$route.params.id,
-            title: this.title,
-            date: this.date,
-            category: this.category,
-            gist: this.gist,
-            content: this.content,
+        let obj = {
+          _id: this.$route.params.id,
+          title: this.title,
+          date: this.date,
+          category: this.category,
+          gist: this.gist,
+          content: this.content
             // html:document.querySelector('.v-show-content').innerHTML
-          }
-          
-          this.$axios.post(webUrl+'admin/updateArticle', {articleInformation: obj})
+        }
+
+        this.$axios.post(webUrl + 'admin/updateArticle', {articleInformation: obj})
             .then(
               response => {
                 self.$message({
@@ -132,41 +132,41 @@ import {checkAdmin,webUrl} from '../../../static/js/public.js'
                   type: 'success'
                 })
               })
-        } else {
+      } else {
           // 新建文章
           // 获取时间
-          this.getDate()
-          let obj = {
-            title: this.title,
-            date: this.date,
-            category: this.category,
-            gist: this.gist,
-            content: this.content,
+        this.getDate()
+        let obj = {
+          title: this.title,
+          date: this.date,
+          category: this.category,
+          gist: this.gist,
+          content: this.content
             // html:document.querySelector('.v-show-content').innerHTML
-          }
-
-          this.$axios.post(webUrl+'admin/saveArticle', {articleInformation: obj})
-          .then((res)=>{
-            if(res.data.status==1){
-                self.$message({
-                  message: '发表文章成功',
-                  type: 'success'
-                })
-                // 保存成功后跳转至文章列表页
-                this.refreshArticleList()
-              }
-            })
         }
-      },
-      // 保存成功后跳转至文章列表页
-      refreshArticleList: function () {
-        this.$router.push({name:'ArticleList'})
-      },
-      goBack: function () {
-        this.$router.go(-1)
+
+        this.$axios.post(webUrl + 'admin/saveArticle', {articleInformation: obj})
+          .then((res) => {
+            if (res.data.status === 1) {
+              self.$message({
+                message: '发表文章成功',
+                type: 'success'
+              })
+                // 保存成功后跳转至文章列表页
+              this.refreshArticleList()
+            }
+          })
       }
+    },
+      // 保存成功后跳转至文章列表页
+    refreshArticleList: function () {
+      this.$router.push({name: 'ArticleList'})
+    },
+    goBack: function () {
+      this.$router.go(-1)
     }
   }
+}
 </script>
 
 <style scoped lang='scss'>

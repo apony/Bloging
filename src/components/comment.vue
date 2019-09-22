@@ -1,174 +1,207 @@
 <template>
   <div class="page">
-      <div v-if="isSignIn===0" @click="signIn" class="signIn">登录留言吧~~</div>
-      <div v-else class="part part_input">
-        <div class="input_top">
-          <div class="img"><img class="avatar"  :src="avatar!='null'?avatar:imgDefault" alt=""><p class="from_uname">{{nickName}}</p></div>
-          <div class="text"><textarea v-model="submitTxt" class="textarea"></textarea></div>
+    <div v-if="isSignIn===0"
+         @click="signIn"
+         class="signIn">登录留言吧~~</div>
+    <div v-else
+         class="part part_input">
+      <div class="input_top">
+        <div class="img"><img class="avatar"
+               :src="avatar!='null'?avatar:imgDefault"
+               alt="">
+          <p class="from_uname">{{nickName}}</p>
         </div>
-        <div class="input_down">
-          <a href="javascript:;" @click="submit_new" class="submit">submit</a>
-        </div>
+        <div class="text"><textarea v-model="submitTxt"
+                    class="textarea"></textarea></div>
       </div>
-      <div v-if="comments.length>0" class="part part_output">
-        <p class="output_header">全部评论 <span class="total">{{comments.length}}</span> 条</p>
-        <div class="output_body">
-          <div v-for="(comment,index) in comments" :key="comment.id" class="floor">
-            <div class="floor_l"><img class="avatar" :src="comment.avatar!='null'?comment.avatar:imgDefault" alt=""><p class="from_uname">{{comment.from_uname}}</p></div>
-            <div class="floor_r">
-              <div class="comment">
-                <div class="comment_main">{{comment.content}}</div>
-                <div class="comment_bar">
-                  <span class="date">{{comment.date}}</span>
-                  <a @click="setTextarea(index,true,comment.from_uid,comment.from_uname)" href="javascript:;" class="replay_btn">回复</a>
-                </div>
-                <div v-if="comment.child.length>0" class="comment_replay__main">
-                  <div v-for="(replay,index2) in comment.child" :key="index2" class="comment_replay__floor">
-                    <div class="floor_l"><img class="avatar" :src="replay.avatar!='null'?replay.avatar:imgDefault" alt=""></div>
-                    <div class="floor_r">
-                      <p class="content">
-                        <span class="from_name">{{replay.from_uname}}</span>回复<span class="to_name">{{replay.to_uname}}</span> ：
-                        {{replay.content}}
-                      </p>
-                      <div class="footer">
-                        <span class="date">{{replay.date}}</span>
-                        <a @click="setTextarea(index,true,replay.from_uid,replay.from_uname)" href="javascript:;" class="replay_btn">回复</a>
-                      </div>
+      <div class="input_down">
+        <a href="javascript:;"
+           @click="submit_new"
+           class="submit">submit</a>
+      </div>
+    </div>
+    <div v-if="comments.length>0"
+         class="part part_output">
+      <p class="output_header">全部评论 <span class="total">{{comments.length}}</span> 条</p>
+      <div class="output_body">
+        <div v-for="(comment,index) in comments"
+             :key="comment.id"
+             class="floor">
+          <div class="floor_l"><img class="avatar"
+                 :src="comment.avatar!='null'?comment.avatar:imgDefault"
+                 alt="">
+            <p class="from_uname">{{comment.from_uname}}</p>
+          </div>
+          <div class="floor_r">
+            <div class="comment">
+              <div class="comment_main">{{comment.content}}</div>
+              <div class="comment_bar">
+                <span class="date">{{comment.date}}</span>
+                <a @click="setTextarea(index,true,comment.from_uid,comment.from_uname)"
+                   href="javascript:;"
+                   class="replay_btn">回复</a>
+              </div>
+              <div v-if="comment.child.length>0"
+                   class="comment_replay__main">
+                <div v-for="(replay,index2) in comment.child"
+                     :key="index2"
+                     class="comment_replay__floor">
+                  <div class="floor_l"><img class="avatar"
+                         :src="replay.avatar!='null'?replay.avatar:imgDefault"
+                         alt=""></div>
+                  <div class="floor_r">
+                    <p class="content">
+                      <span class="from_name">{{replay.from_uname}}</span>回复<span class="to_name">{{replay.toUname}}</span> ：
+                      {{replay.content}}
+                    </p>
+                    <div class="footer">
+                      <span class="date">{{replay.date}}</span>
+                      <a @click="setTextarea(index,true,replay.from_uid,replay.from_uname)"
+                         href="javascript:;"
+                         class="replay_btn">回复</a>
                     </div>
                   </div>
                 </div>
-                <div v-if="comment.open" class="comment_replay__bar">
-                  <textarea v-model.lazy="textArea[index]" :placeholder="`回复${comment.to_uname}：`" class="textarea"></textarea>
-                  <div class="down">
-                    <a href="javascript:;" @click="setTextarea(index,false)" class="takeUp">收起↑</a>
-                    <a href="javascript:;" @click="submit_reply(comment.id,comment.to_uid,comment.to_uname,textArea[index])" class="submit">发表</a>
-                  </div>
+              </div>
+              <div v-if="comment.open"
+                   class="comment_replay__bar">
+                <textarea v-model.lazy="textArea[index]"
+                          :placeholder="`回复${comment.toUname}：`"
+                          class="textarea"></textarea>
+                <div class="down">
+                  <a href="javascript:;"
+                     @click="setTextarea(index,false)"
+                     class="takeUp">收起↑</a>
+                  <a href="javascript:;"
+                     @click="submit_reply(comment.id,comment.toUid,comment.toUname,textArea[index])"
+                     class="submit">发表</a>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
   </div>
 </template>
 
 <script>
-import { Guid, getDate, webUrl } from "../../static/js/public.js";
-import imgDefault from "../../static/img/avatar.png";
+import { Guid, getDate, webUrl } from '../../static/js/public.js'
+import imgDefault from '../../static/img/avatar.png'
 
 export default {
-  props: ["comments", "articleId"],
-  data() {
+  props: ['comments', 'articleId'],
+  data () {
     return {
       nickName: null,
       avatar: null,
       name: null,
       token: null,
-      submitTxt: "",
+      submitTxt: '',
       imgDefault: imgDefault
-    };
-  },
-  computed: {
-    isSignIn() {
-      return this.$store.state.isSignIn;
-    },
-    textArea() {
-      return this.comments.map(e => {
-        return null;
-      });
     }
   },
-  created() {
-    this.nickName = localStorage.getItem("nickName");
-    this.avatar = localStorage.getItem("avatar");
-    this.name = localStorage.getItem("user_name");
-    this.token = localStorage.getItem("token");
+  computed: {
+    isSignIn () {
+      return this.$store.state.isSignIn
+    },
+    textArea () {
+      return this.comments.map(e => {
+        return null
+      })
+    }
+  },
+  created () {
+    this.nickName = localStorage.getItem('nickName')
+    this.avatar = localStorage.getItem('avatar')
+    this.name = localStorage.getItem('user_name')
+    this.token = localStorage.getItem('token')
 
     // console.log(getDate())
   },
   methods: {
-    signIn: function() {
-      this.$router.push({ name: "Signin" });
+    signIn: function () {
+      this.$router.push({ name: 'Signin' })
     },
-    submit_new: function() {
-      //新发表评论
-      let that = this;
+    submit_new: function () {
+      // 新发表评论
+      let that = this
       let obj = {
-        _id: that.articleId, //文章id
-        id: Guid(), //评论id
+        _id: that.articleId, // 文章id
+        id: Guid(), // 评论id
         from_uid: that.name,
         from_uname: that.nickName,
         avatar: that.avatar,
         content: that.submitTxt,
         date: getDate()
-      };
+      }
 
       that.$axios
-        .post(webUrl + "comment/new", {
+        .post(webUrl + 'comment/new', {
           ...obj
         })
         .then(response => {
           that.$message({
-            type: "success",
+            type: 'success',
             message: response.data.msg
-          });
-          if (response.data.status == 1) {
-            this.$emit("update");
+          })
+          if (response.data.status === 1) {
+            this.$emit('update')
           }
         })
         .catch(reject => {
-          console.log(reject);
-        });
+          console.log(reject)
+        })
     },
-    submit_reply: function(id, to_uid, to_uname, textArea) {
-      //回复别人评论
-      let that = this;
+    submit_reply: function (id, toUid, toUname, textArea) {
+      // 回复别人评论
+      let that = this
       let obj = {
-        _id: that.articleId, //文章id
-        id: id, //评论id
+        _id: that.articleId, // 文章id
+        id: id, // 评论id
         from_uid: that.name,
         from_uname: that.nickName,
         avatar: that.avatar,
-        to_uid: to_uid,
-        to_uname: to_uname,
+        toUid: toUid,
+        toUname: toUname,
         content: textArea,
         date: getDate()
-      };
+      }
       // console.log(obj)
       that.$axios
-        .post(webUrl + "comment/reply", {
+        .post(webUrl + 'comment/reply', {
           ...obj
         })
         .then(response => {
           that.$message({
-            type: "success",
+            type: 'success',
             message: response.data.msg
-          });
-          if (response.data.status == 1) {
-            this.$emit("update");
+          })
+          if (response.data.status === 1) {
+            this.$emit('update')
           }
         })
         .catch(reject => {
-          console.log(reject);
-        });
+          console.log(reject)
+        })
     },
     /**
      * 改变输入框状态
      * index评论序号
      * open 该评论下输入框开否
-     * to_uid 该评论下目标用户id
-     * to_uname 该评论下目标name
+     * toUid 该评论下目标用户id
+     * toUname 该评论下目标name
      */
-    setTextarea: function(index, open, to_uid, to_uname) {
+    setTextarea: function (index, open, toUid, toUname) {
       if (this.isSignIn === 0) {
-        this.$router.push({ name: "Signin" });
+        this.$router.push({ name: 'Signin' })
       } else {
-        let params = { index, open, to_uid, to_uname };
-        this.$emit("setTextarea", params);
+        let params = { index, open, toUid, toUname }
+        this.$emit('setTextarea', params)
       }
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

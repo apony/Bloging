@@ -12,25 +12,25 @@
 </template>
 
 <script>
-import CommonHeader from "../components/commonHeader";
-import CommonFooter from "../components/commonFooter";
-import { checkSign } from "../../static/js/public.js";
+import CommonHeader from '../components/commonHeader'
+import CommonFooter from '../components/commonFooter'
+import { checkSign } from '../../static/js/public.js'
 
 export default {
   mixins: [checkSign],
-  data() {
+  data () {
     return {
       items: []
-    };
+    }
   },
   components: {
     CommonHeader,
     CommonFooter
   },
-  mounted() {
+  mounted () {
 
   }
-};
+}
 </script>
 
 <style lang="css" scoped>

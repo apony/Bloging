@@ -19,18 +19,18 @@
 
 <script>
 // import List from "../components/list"
-import {webUrl} from "../../static/js/public.js"
+import {webUrl} from '../../static/js/public.js'
 
 export default {
-  data(){
-    return{
-      items:[]
+  data () {
+    return {
+      items: []
     }
   },
-  created(){
-    this.$axios.post(webUrl+'demoList')
-      .then((res)=>{
-        this.items=res.data;
+  created () {
+    this.$axios.post(webUrl + 'demoList')
+      .then((res) => {
+        this.items = res.data
       })
   }
 }

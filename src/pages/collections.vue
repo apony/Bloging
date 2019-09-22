@@ -39,31 +39,31 @@ import {anchor} from '../../static/js/public.js'
 
 export default {
   mixins: [anchor],
-  data(){
-    return{
-      items:[
-         {
-          "type":'工具',
-          "list":[
-              {"id":1,"href":'https://app.astralapp.com/auth',"title":"Astral","gist":"帮助github分组小工具","category":"工具"},
-              {"id":2,"href":'https://modao.cc/',"title":"墨刀","gist":"画原型图","category":"工具"},
-              {"id":3,"href":'https://www.processon.com/',"title":"processon","gist":"画脑图工具","category":"工具"}
+  data () {
+    return {
+      items: [
+        {
+          'type': '工具',
+          'list': [
+              {'id': 1, 'href': 'https://app.astralapp.com/auth', 'title': 'Astral', 'gist': '帮助github分组小工具', 'category': '工具'},
+              {'id': 2, 'href': 'https://modao.cc/', 'title': '墨刀', 'gist': '画原型图', 'category': '工具'},
+              {'id': 3, 'href': 'https://www.processon.com/', 'title': 'processon', 'gist': '画脑图工具', 'category': '工具'}
           ]
         },
         {
-          "type":'灵感',
-          "list":[
-              {"id":4,"href":'https://500px.com/',"title":"500px","gist":"很不错的图片网站","category":"灵感"},
-              {"id":5,"href":'https://unsplash.com/',"title":"unsplash","gist":"壁纸","category":"灵感"}
+          'type': '灵感',
+          'list': [
+              {'id': 4, 'href': 'https://500px.com/', 'title': '500px', 'gist': '很不错的图片网站', 'category': '灵感'},
+              {'id': 5, 'href': 'https://unsplash.com/', 'title': 'unsplash', 'gist': '壁纸', 'category': '灵感'}
           ]
         }
       ]
     }
   },
-  components:{
+  components: {
     // List
   },
-  created(){
+  created () {
     // this.$axios.get('http://localhost:8080/static/goods.json').then((data)=>{
     // // this.$axios.get('./static/goods.json').then((data)=>{
     //   console.log(data)

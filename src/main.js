@@ -12,30 +12,27 @@ import '../static/css/public.css'
 import '../static/css/font/iconfont.css'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-import 'element-ui/lib/theme-chalk/display.css';
+import 'element-ui/lib/theme-chalk/display.css'
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
-
 
 // Vue.use(VueResource)
 Vue.prototype.$axios = axios
 Vue.use(ElementUI)
 Vue.use(mavonEditor)
 
+// eslint-disable-next-line no-new
 new Vue({
   el: '#app',
   data () {
-    return {
-    }
+    return {}
   },
   router,
-//   axios,
-  store,
+  //   axios,
+  store
   // watch:{
   //   '$route'(to,from){
   //      console.log(to)
   //    }
   // }
 })
-
-

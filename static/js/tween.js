@@ -97,8 +97,8 @@ var Tween = {
         easeIn: function(t, b, c, d, a, p) {
             var s;
             if (t==0) return b;
-            if ((t /= d) == 1) return b + c;
-            if (typeof p == "undefined") p = d * .3;
+            if ((t /= d) === 1) return b + c;
+            if (typeof p === "undefined") p = d * .3;
             if (!a || a < Math.abs(c)) {
                 s = p / 4;
                 a = c;
@@ -110,8 +110,8 @@ var Tween = {
         easeOut: function(t, b, c, d, a, p) {
             var s;
             if (t==0) return b;
-            if ((t /= d) == 1) return b + c;
-            if (typeof p == "undefined") p = d * .3;
+            if ((t /= d) === 1) return b + c;
+            if (typeof p === "undefined") p = d * .3;
             if (!a || a < Math.abs(c)) {
                 a = c; 
                 s = p / 4;
@@ -123,8 +123,8 @@ var Tween = {
         easeInOut: function(t, b, c, d, a, p) {
             var s;
             if (t==0) return b;
-            if ((t /= d / 2) == 2) return b+c;
-            if (typeof p == "undefined") p = d * (.3 * 1.5);
+            if ((t /= d / 2) === 2) return b+c;
+            if (typeof p === "undefined") p = d * (.3 * 1.5);
             if (!a || a < Math.abs(c)) {
                 a = c; 
                 s = p / 4;
@@ -137,15 +137,15 @@ var Tween = {
     },
     Back: {
         easeIn: function(t, b, c, d, s) {
-            if (typeof s == "undefined") s = 1.70158;
+            if (typeof s === "undefined") s = 1.70158;
             return c * (t /= d) * t * ((s + 1) * t - s) + b;
         },
         easeOut: function(t, b, c, d, s) {
-            if (typeof s == "undefined") s = 1.70158;
+            if (typeof s === "undefined") s = 1.70158;
             return c * ((t = t/d - 1) * t * ((s + 1) * t + s) + 1) + b;
         },
         easeInOut: function(t, b, c, d, s) {
-            if (typeof s == "undefined") s = 1.70158; 
+            if (typeof s === "undefined") s = 1.70158; 
             if ((t /= d / 2) < 1) return c / 2 * (t * t * (((s *= (1.525)) + 1) * t - s)) + b;
             return c / 2*((t -= 2) * t * (((s *= (1.525)) + 1) * t + s) + 2) + b;
         }

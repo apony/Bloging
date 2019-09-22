@@ -1,154 +1,173 @@
 <template>
   <div id="sign_wrap">
-    <div v-if="status==1" class="main signIn">
-      <input v-model="name" placeholder="请输入登录账号">
-      <input v-model="password" placeholder="请输入密码" type="password">
-      <el-button @click="signIn" class="sign" >Sign In</el-button>
-      <p class="toSignUp">New to Taoland ? <span @click="toSignUp" > Sign Up !</span></p>
+    <div v-if="status==1"
+         class="main signIn">
+      <input v-model="name"
+             placeholder="请输入登录账号" />
+      <input v-model="password"
+             placeholder="请输入密码"
+             type="password" />
+      <el-button @click="signIn"
+                 class="sign">Sign In</el-button>
+      <p class="toSignUp">
+        New to Taoland ?
+        <span @click="toSignUp">Sign Up !</span>
+      </p>
     </div>
-    <div v-else-if="status==2" class="main signUp">
-      <input v-model="name" placeholder="请输入登录账号">
-      <input v-model="nickName" placeholder="请输入昵称">
-      <input v-model="password" placeholder="请输入密码" type="password">
-      <el-button @click="signUp" class="sign" >Sign Up</el-button>
-      <p class="toSignUp"><span @click="back" > Back to Sign In !</span></p>
+    <div v-else-if="status==2"
+         class="main signUp">
+      <input v-model="name"
+             placeholder="请输入登录账号" />
+      <input v-model="nickName"
+             placeholder="请输入昵称" />
+      <input v-model="password"
+             placeholder="请输入密码"
+             type="password" />
+      <el-button @click="signUp"
+                 class="sign">Sign Up</el-button>
+      <p class="toSignUp">
+        <span @click="back">Back to Sign In !</span>
+      </p>
     </div>
-    <div v-else-if="status==3" class="loading">
-      <div v-if="!txtSignIn" class="outside"></div>
-      <p v-else class="txt">Sign In</p>
-		</div>
+    <div v-else-if="status==3"
+         class="loading">
+      <div v-if="!txtSignIn"
+           class="outside"></div>
+      <p v-else
+         class="txt">Sign In</p>
+    </div>
   </div>
 </template>
 
 <script>
-import { webUrl } from "../../static/js/public.js";
+import { webUrl } from '../../static/js/public.js'
 
 export default {
-  created() {},
-  data() {
+  created () { },
+  data () {
     return {
-      status: 1, //1登录,2注册，3loading
-      name: "",
-      password: "",
-      nickName: "",
+      status: 1, // 1登录,2注册，3loading
+      name: '',
+      password: '',
+      nickName: '',
       txtSignIn: false
-    };
+    }
   },
-  mounted() {},
+  mounted () { },
   methods: {
-    toSignUp: function() {
-      this.status = 2;
-      this.reset();
+    toSignUp: function () {
+      this.status = 2
+      this.reset()
     },
-    back: function() {
-      this.status = 1;
-      this.reset();
+    back: function () {
+      this.status = 1
+      this.reset()
     },
-    reset: function() {
-      this.name = "";
-      this.password = "";
-      this.nickName = "";
+    reset: function () {
+      this.name = ''
+      this.password = ''
+      this.nickName = ''
     },
-    signUp: function() {
-      //注册
-      let that = this;
+    signUp: function () {
+      // 注册
+      let that = this
 
       if (that.name.length > 20) {
         that.$message({
-          type: "warning",
-          message: "登录账号太长!"
-        });
-        return;
+          type: 'warning',
+          message: '登录账号太长!'
+        })
+        return
       }
       if (that.nickName.length > 12) {
         that.$message({
-          type: "warning",
-          message: "昵称太长!"
-        });
-        return;
+          type: 'warning',
+          message: '昵称太长!'
+        })
+        return
       }
       if (
-        that.name.length == 0 ||
-        that.nickName.length == 0 ||
-        that.password.length == 0
+        that.name.length === 0 ||
+        that.nickName.length === 0 ||
+        that.password.length === 0
       ) {
         that.$message({
-          type: "warning",
-          message: "有未填写项!"
-        });
-        return;
+          type: 'warning',
+          message: '有未填写项!'
+        })
+        return
       }
       that.$axios
-        .post(webUrl + "admin/signUp", {
+        .post(webUrl + 'admin/signUp', {
           name: that.name,
           password: that.password,
           nickName: that.nickName
         })
         .then(response => {
           that.$message({
-            type: "success",
+            type: 'success',
             message: response.data.msg
-          });
-          if (response.data.status == 1) {
-            that.back();
+          })
+          if (response.data.status === 1) {
+            that.back()
           }
         })
         .catch(reject => {
-          console.log(reject);
-        });
+          console.log(reject)
+        })
     },
-    signIn: function() {
-      //登录
-      let that = this;
+    signIn: function () {
+      // 登录
+      let that = this
       this.$axios
-        .post(webUrl + "admin/signIn", {
+        .post(webUrl + 'admin/signIn', {
           name: this.name,
           password: this.password
         })
         .then(response => {
-          if (response.data.status == 1) {
-            let type = response.data.type;
+          if (response.data.status === 1) {
+            let type = response.data.type
 
-            this.status = 3;
-            localStorage.setItem("token", response.data.token);
-            localStorage.setItem("user_name", response.data.user_name);
-            localStorage.setItem("nickName", response.data.nickName);
-            localStorage.setItem("avatar", response.data.avatar);
-            if (type == 1) {
-              this.$store.commit("changeIsSignIn", 1); //admin
-            } else if (type == 2) {
-              this.$store.commit("changeIsSignIn", 2); //游客
-              this.$store.commit("changeIndex", "7");
+            this.status = 3
+            localStorage.setItem('token', response.data.token)
+            localStorage.setItem('user_name', response.data.user_name)
+            localStorage.setItem('nickName', response.data.nickName)
+            localStorage.setItem('avatar', response.data.avatar)
+            if (type === 1) {
+              this.$store.commit('changeIsSignIn', 1) // admin
+            } else if (type === 2) {
+              this.$store.commit('changeIsSignIn', 2) // 游客
+              this.$store.commit('changeIndex', '7')
             }
             setTimeout(() => {
-              this.txtSignIn = true;
+              this.txtSignIn = true
               setTimeout(() => {
-                if (type == 1) {
-                  this.$router.push({ name: "ArticleList" }); //admin
-                } else if (type == 2) {
-                  this.$router.push({ name: "visiter" }); //游客
+                if (type === 1) {
+                  this.$router.push({ name: 'ArticleList' }) // admin
+                } else if (type === 2) {
+                  this.$router.push({ name: 'visiter' }) // 游客
                 }
-              }, 1500);
-            }, 3000);
+              }, 1500)
+            }, 3000)
           } else {
             that.$message({
-              type: "error",
+              type: 'error',
               message: response.data.msg
-            });
+            })
           }
         })
         .catch(reject => {
-          console.log(reject);
-        });
+          console.log(reject)
+        })
     }
   },
-  beforeCreate: function() {
-    document.getElementsByTagName("body")[0].className = "admin";
+  beforeCreate: function () {
+    document.getElementsByTagName('body')[0].className = 'admin'
   },
-  beforeDestroy: function() {
-    document.body.removeAttribute("class", "admin");
+  beforeDestroy: function () {
+    document.body.removeAttribute('class', 'admin')
   }
-};
+}
 </script>
 
 <style scoped lang='scss'>

@@ -17,13 +17,13 @@ export default {
   //     list:[]
   //   }
   // },
-  props: ['items'],  
-  methods:{
+  props: ['items'],
+  methods: {
     // goCategory:function(e){
     //   this.$store.commit('changeIndex','3')
     //   this.$router.push({ path: '/categories'+e})
     // }
-  },
+  }
 }
 </script>
 

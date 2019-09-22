@@ -50,41 +50,41 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       // activeIndex: '1',
       navMobile: false
-    };
+    }
   },
   methods: {
-    handleSelect(key, keyPath) {
-      this.$store.commit("changeIndex", key);
+    handleSelect (key, keyPath) {
+      this.$store.commit('changeIndex', key)
     },
-    navToggle() {
-      this.navMobile = this.navMobile ? false : true;
+    navToggle () {
+      this.navMobile = !this.navMobile
     },
-    slideUp() {
-      this.navMobile = this.navMobile ? false : true;
+    slideUp () {
+      this.navMobile = !this.navMobile
     }
   },
   // created(){
   //   console.log(this.$store.state.activeIndex)
   // },
   computed: {
-    activeIndex() {
-      return this.$store.state.activeIndex;
+    activeIndex () {
+      return this.$store.state.activeIndex
     },
-    isSignIn() {
-      return this.$store.state.isSignIn;
+    isSignIn () {
+      return this.$store.state.isSignIn
     },
-    nickName() {
-      return localStorage.getItem("nickName");
+    nickName () {
+      return localStorage.getItem('nickName')
     },
-    avatar() {
-      return localStorage.getItem("avatar");
+    avatar () {
+      return localStorage.getItem('avatar')
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

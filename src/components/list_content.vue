@@ -14,12 +14,12 @@ import {anchor} from '../../static/js/public.js'
 
 export default {
   mixins: [anchor],
-  data(){
-    return{
+  data () {
+    return {
       // list:[]
     }
   },
-  methods:{
+  methods: {
     // anchor:function(e){
     //   let id='anchor-'+e;
     //   let anchor=document.getElementById(id);

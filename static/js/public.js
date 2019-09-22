@@ -92,15 +92,15 @@ export const checkAdmin = {
         let token = localStorage.getItem("token");
         this.$axios.post(webUrl + 'admin/checkUser', { 'user_name': user_name, 'token': token })
             .then((response) => {
-                if (response.data.status == 0) {
+                if (response.data.status === 0) {
                     this.$store.commit("changeIsSignIn", 0);
                     this.$store.commit("changeIndex", '1');
                     localStorage.clear();
                     this.$router.replace({ name: 'home' })
                 } else {
-                    if (response.data.type == 1) {
+                    if (response.data.type === 1) {
                         this.$store.commit("changeIsSignIn", 1);//admin
-                    } else if (response.data.type == 2) {
+                    } else if (response.data.type === 2) {
                         this.$store.commit("changeIsSignIn", 2);//游客
                         this.$router.replace({ name: 'home' })
                         this.$store.commit("changeIndex", '1');
@@ -119,7 +119,7 @@ export const checkVisiter = {
         let token = localStorage.getItem("token");
         this.$axios.post(webUrl + 'admin/checkUser', { 'user_name': user_name, 'token': token })
             .then((response) => {
-                if (response.data.status == 0) {
+                if (response.data.status === 0) {
                     this.$store.commit("changeIsSignIn", 0);
                     this.$store.commit("changeIndex", '1');
                     localStorage.clear();
@@ -138,13 +138,13 @@ export const checkSign = {
         let token = localStorage.getItem("token");
         this.$axios.post(webUrl + 'admin/checkUser', { 'user_name': user_name, 'token': token })
             .then((response) => {
-                if (response.data.status == 0) {
+                if (response.data.status === 0) {
                     this.$store.commit("changeIsSignIn", 0);
                     localStorage.clear();
                 } else {
-                    if (response.data.type == 1) {
+                    if (response.data.type === 1) {
                         this.$store.commit("changeIsSignIn", 1);//admin
-                    } else if (response.data.type == 2) {
+                    } else if (response.data.type === 2) {
                         this.$store.commit("changeIsSignIn", 2);//游客
                     }
                 }

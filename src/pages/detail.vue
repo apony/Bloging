@@ -4,32 +4,49 @@
       <h1 class="title">{{title}}</h1>
       <div class="some">
         <span class="date"><i class="iconfont icon-date"></i>{{date}}</span>
-        <span class="category"><i class="iconfont icon-tubiao13"></i><span v-for="tag in category" :key="tag.id">{{tag}}</span></span>
+        <span class="category"><i class="iconfont icon-tubiao13"></i><span v-for="tag in category"
+                :key="tag.id">{{tag}}</span></span>
       </div>
-      <div class="detail" v-if="content">
-          <mavon-editor v-model="content" default_open="preview" defaultOpen= "preview"  :toolbarsFlag="false" :subfield="false"></mavon-editor>
-          <div class="footer">
-            <div @click="toGo(prev._id)" class="btn prev"><p>←上一篇</p><p>{{prev.title?prev.title:'没有更多'}}</p></div>
-            <div @click="toGo(next._id)" class="btn next"><p>下一篇→</p><p>{{next.title?next.title:'没有更多'}}</p></div>
+      <div class="detail"
+           v-if="content">
+        <mavon-editor v-model="content"
+                      default_open="preview"
+                      defaultOpen="preview"
+                      :toolbarsFlag="false"
+                      :subfield="false"></mavon-editor>
+        <div class="footer">
+          <div @click="toGo(prev._id)"
+               class="btn prev">
+            <p>←上一篇</p>
+            <p>{{prev.title?prev.title:'没有更多'}}</p>
           </div>
+          <div @click="toGo(next._id)"
+               class="btn next">
+            <p>下一篇→</p>
+            <p>{{next.title?next.title:'没有更多'}}</p>
+          </div>
+        </div>
       </div>
-      <comment :comments="comments" :articleId="articleId" @update="update" @setTextarea="setTextarea"></comment>
+      <comment :comments="comments"
+               :articleId="articleId"
+               @update="update"
+               @setTextarea="setTextarea"></comment>
     </div>
   </div>
 </template>
 
 <script>
-import Comment from "../components/comment";
-import { webUrl } from "../../static/js/public.js";
+import Comment from '../components/comment'
+import { webUrl } from '../../static/js/public.js'
 
 export default {
-  data() {
+  data () {
     return {
-      title: "",
-      date: "",
+      title: '',
+      date: '',
       category: [],
-      gist: "",
-      content: "",
+      gist: '',
+      content: '',
       comments: [],
       articleId: null,
       prev: {},
@@ -40,7 +57,7 @@ export default {
       //     from_uid: 11111,
       //     from_uname: "非洲刘德华",
       //     avatar: avatar,
-      //     to_uid: null,
+      //     toUid: null,
       //     content: "啊十分大师傅",
       //     date: "2018-07-18 20:12",
       //     open:false,
@@ -49,8 +66,8 @@ export default {
       //         from_uid: 2222,
       //         from_uname: "乌鸦坐飞机",
       //         avatar: avatar,
-      //         to_uid: 1111,
-      //         to_uname: "非洲刘德华",
+      //         toUid: 1111,
+      //         toUname: "非洲刘德华",
       //         content: "asdf撒旦飞洒发的",
       //         date: "2018-07-18 20:12"
       //       }
@@ -61,7 +78,7 @@ export default {
       //     from_uid: 11111,
       //     from_uname: "非洲刘德华",
       //     avatar: avatar,
-      //     to_uid: null,
+      //     toUid: null,
       //     content: "啊十分大师傅",
       //     date: "2018-07-18 20:12",
       //     open:false,
@@ -70,8 +87,8 @@ export default {
       //         from_uid: 2222,
       //         from_uname: "乌鸦坐飞机",
       //         avatar: avatar,
-      //         to_uid: 1111,
-      //         to_uname: "非洲刘德华",
+      //         toUid: 1111,
+      //         toUname: "非洲刘德华",
       //         content: "asdf撒旦飞洒发的",
       //         date: "2018-07-18 20:12"
       //       },
@@ -79,8 +96,8 @@ export default {
       //         from_uid: 3333,
       //         from_uname: "飞机",
       //         avatar: avatar,
-      //         to_uid: 11111,
-      //         to_uname: "非洲刘德华",
+      //         toUid: 11111,
+      //         toUname: "非洲刘德华",
       //         content: "asdf撒旦飞洒发的",
       //         date: "2018-07-18 20:12"
       //       },
@@ -88,30 +105,29 @@ export default {
       //         from_uid: 11111,
       //         from_uname: "非洲刘德华",
       //         avatar: avatar,
-      //         to_uid: 2222,
-      //         to_uname: "乌鸦坐飞机",
+      //         toUid: 2222,
+      //         toUname: "乌鸦坐飞机",
       //         content: "asdf撒旦飞洒发的",
       //         date: "2018-07-18 20:12"
       //       }
       //     ]
       //   }
       // ]
-    };
+    }
   },
-  beforeCreate() {
+  beforeCreate () {
 
   },
-  mounted: function() {
-    this.init();
+  mounted: function () {
+    this.init()
   },
   methods: {
-    init: function() {
+    init: function () {
       if (this.$route.params.id) {
-        this.articleId = this.$route.params.id;
+        this.articleId = this.$route.params.id
         this.$axios
-          .get(webUrl + "articleDetail/" + this.$route.params.id)
+          .get(webUrl + 'articleDetail/' + this.$route.params.id)
           .then(res => {
-            let article = res.data;
             let {
               comments,
               title,
@@ -121,51 +137,51 @@ export default {
               category,
               prev,
               next
-            } = res.data;
+            } = res.data
 
-            this.title = title;
-            this.date = date;
-            this.content = content;
-            this.gist = gist;
-            this.category = category;
-            this.prev = prev;
-            this.next = next;
+            this.title = title
+            this.date = date
+            this.content = content
+            this.gist = gist
+            this.category = category
+            this.prev = prev
+            this.next = next
             if (comments) {
               for (let i = 0; i < comments.length; i++) {
-                comments[i]["open"] = false;
-                comments[i]["to_uid"] = comments[i]["from_uid"];
-                comments[i]["to_uname"] = comments[i]["from_uname"];
+                comments[i]['open'] = false
+                comments[i]['toUid'] = comments[i]['from_uid']
+                comments[i]['toUname'] = comments[i]['from_uname']
               }
-              this.comments = comments;
+              this.comments = comments
             }
-          });
+          })
       }
     },
-    update: function() {
-      this.init();
+    update: function () {
+      this.init()
     },
     /**
      * 改变输入框状态
      * index评论序号
      * open 该评论下输入框开否
-     * to_uid 该评论下目标用户id
-     * to_uname 该评论下目标name
+     * toUid 该评论下目标用户id
+     * toUname 该评论下目标name
      */
-    setTextarea: function(params) {
-      let { index, open, to_uid, to_uname } = params;
-      let comments = this.comments;
+    setTextarea: function (params) {
+      let { index, open, toUid, toUname } = params
+      let comments = this.comments
       // console.log(params)
-      if (to_uid) {
-        comments[index]["to_uid"] = to_uid;
-        comments[index]["to_uname"] = to_uname;
+      if (toUid) {
+        comments[index]['toUid'] = toUid
+        comments[index]['toUname'] = toUname
       }
-      comments[index]["open"] = open;
+      comments[index]['open'] = open
       // debugger
-      this.comments = comments;
+      this.comments = comments
     },
-    toGo: function(id) {
+    toGo: function (id) {
       if (id) {
-        this.$router.push({ path: `/detail/${id}` });
+        this.$router.push({ path: `/detail/${id}` })
         // this.$router.push({ path: '/detail/'+id});
 
         // this.$router.push({ path: '/visiter'});
@@ -176,22 +192,22 @@ export default {
     Comment
   },
   watch: {
-    //监听路由参数变化后刷新页面
-    $route(to, from) {
-      this.init();
+    // 监听路由参数变化后刷新页面
+    $route (to, from) {
+      this.init()
       Math.animation(
         document.documentElement.scrollTop,
         0,
         0,
-        "Quart.easeOut",
-        function(value) {
-          document.documentElement.scrollTop = value;
-          document.body.scrollTop = value;
+        'Quart.easeOut',
+        function (value) {
+          document.documentElement.scrollTop = value
+          document.body.scrollTop = value
         }
-      );
+      )
     }
   }
-};
+}
 </script>
 
 <style>
